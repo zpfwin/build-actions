@@ -1,17 +1,7 @@
 #
 # 同步上游仓库或者清理发布都需要用REPO_TOKEN密匙
 #
-# 同一个仓库只需要存入一次密匙即可，这密匙基本是万能的，什么都能用上
-#
 # REPO_TOKEN密匙制作教程：https://git.io/jm.md
-#
-#
-# 说明：
-#
-#  手动按钮启动时候参数为true时生效，为false是关闭项目启动
-#
-# ‘同步上游仓库’ 只有在手动启动时参数改为fork再启动才生效，同步仓库时会自动保留config配置文件和备份diy-part.sh文件
-#
 #
 
 
@@ -32,8 +22,8 @@ jobs:
   del_runs:
     runs-on: Ubuntu-20.04
     name: 同步上游仓库
-    steps:
     
+    steps:
     - name: 准备结束
       uses: actions/checkout@v2
       
@@ -55,7 +45,7 @@ jobs:
         git clone -b main https://github.com/281677160/build-actions.git shangyou
         git clone -b main https://github.com/${{github.repository}}.git repogx
         if [[ -d repogx/build/Lede_source ]];then
-          rm -fr shangyou/build/Lede_source/.config
+          rm -rf shangyou/build/Lede_source/.config
         fi
         if [[ -d repogx/build/Lienol_source ]];then
           rm -fr shangyou/build/Lienol_source/.config
@@ -96,54 +86,54 @@ jobs:
         fi
         cd repogx
         if [[ -n "$(ls -A "$GITHUB_WORKSPACE/repogx/.github/workflows/compile.yml" 2>/dev/null)" ]]; then
-          git rm -f $GITHUB_WORKSPACE/repogx/.github/workflows/compile.yml
+          git rm -rf $GITHUB_WORKSPACE/repogx/.github/workflows/compile.yml
         fi
         cp -Rf $GITHUB_WORKSPACE/shangyou/.github/workflows/compile.yml .github/workflows/compile.yml
         if [[ -n "$(ls -A "$GITHUB_WORKSPACE/repogx/.github/workflows/build-openwrt.yml" 2>/dev/null)" ]]; then
-          git rm -f $GITHUB_WORKSPACE/repogx/.github/workflows/build-openwrt.yml
+          git rm -rf $GITHUB_WORKSPACE/repogx/.github/workflows/build-openwrt.yml
         fi
         cp -Rf $GITHUB_WORKSPACE/shangyou/.github/workflows/build-openwrt.yml .github/workflows/build-openwrt.yml
-        git rm -f $GITHUB_WORKSPACE/repogx/.github/workflows/${{env.BILDYML}}
+        git rm -rf $GITHUB_WORKSPACE/repogx/.github/workflows/${{env.BILDYML}}
         cp -Rf $GITHUB_WORKSPACE/shangyou/.github/workflows/synchronization.yml .github/workflows/synchronization.yml
         if [[ -f build/Lede_source/diy-part.sh ]];then
           cp -Rf build/Lede_source/diy-part.sh build/Lede_source/diy-part.sh.bak
-          git rm -f build/Lede_source/diy-part.sh
+          git rm -rf build/Lede_source/diy-part.sh
         fi
         if [[ -f build/Lienol_source/diy-part.sh ]];then
           cp -Rf build/Lienol_source/diy-part.sh build/Lienol_source/diy-part.sh.bak
-          git rm -f build/Lienol_source/diy-part.sh
+          git rm -rf build/Lienol_source/diy-part.sh
         fi
         if [[ -f build/Mortal_source/diy-part.sh ]];then
           cp -Rf build/Mortal_source/diy-part.sh build/Mortal_source/diy-part.sh.bak
-          git rm -f build/Mortal_source/diy-part.sh
+          git rm -rf build/Mortal_source/diy-part.sh
         fi
         if [[ -f build/Tianling_source/diy-part.sh ]];then
           cp -Rf build/Tianling_source/diy-part.sh build/Tianling_source/diy-part.sh.bak
-          git rm -f build/Tianling_source/diy-part.sh
+          git rm -rf build/Tianling_source/diy-part.sh
         fi
         if [[ -f build/openwrt_amlogic/diy-part.sh ]];then
           cp -Rf build/openwrt_amlogic/diy-part.sh build/openwrt_amlogic/diy-part.sh.bak
-          git rm -f build/openwrt_amlogic/diy-part.sh
+          git rm -rf build/openwrt_amlogic/diy-part.sh
         fi
         if [[ -f build/Lede_source/settings.ini ]];then
           cp -Rf build/Lede_source/settings.ini build/Lede_source/settings.ini.bak
-          git rm -f build/Lede_source/settings.ini
+          git rm -rf build/Lede_source/settings.ini
         fi
         if [[ -f build/Lienol_source/settings.ini ]];then
           cp -Rf build/Lienol_source/settings.ini build/Lienol_source/settings.ini.bak
-          git rm -f build/Lienol_source/settings.ini
+          git rm -rf build/Lienol_source/settings.ini
         fi
         if [[ -f build/Mortal_source/settings.ini ]];then
           cp -Rf build/Mortal_source/settings.ini build/Mortal_source/settings.ini.bak
-          git rm -f build/Mortal_source/settings.ini
+          git rm -rf build/Mortal_source/settings.ini
         fi
         if [[ -f build/Tianling_source/settings.ini ]];then
           cp -Rf build/Tianling_source/settings.ini build/Tianling_source/settings.ini.bak
-          git rm -f build/Tianling_source/settings.ini
+          git rm -rf build/Tianling_source/settings.ini
         fi
         if [[ -f build/openwrt_amlogic/settings.ini ]];then
           cp -Rf build/openwrt_amlogic/settings.ini build/openwrt_amlogic/settings.ini.bak
-          git rm -f build/openwrt_amlogic/settings.ini
+          git rm -rf build/openwrt_amlogic/settings.ini
         fi
         cp -Rf $GITHUB_WORKSPACE/shangyou/* ./
         cp -Rf $GITHUB_WORKSPACE/shangyou/.github/workflows/* .github/workflows
